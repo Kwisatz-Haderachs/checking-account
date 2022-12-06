@@ -12,6 +12,12 @@ public class LineReader {
     }
 
     public int readInt() {
-        return scanner.nextInt();
+        String input = scanner.nextLine();
+        try{
+            return Integer.parseInt(input);
+        } catch (NumberFormatException numberFormatException){
+            System.out.println(numberFormatException);
+            return 0;
+        }
     }
 }
