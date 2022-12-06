@@ -3,16 +3,16 @@ import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
 
 import java.io.PrintStream;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccountManagmentTests {
+public class AccountManagementTests {
     
     private PrintStream printStream;
     private LineReader reader;
     private AccountManagement accountManagement;
+    private Account genericAccount;
 
     @BeforeEach
     void setUp() {
@@ -20,12 +20,17 @@ public class AccountManagmentTests {
         reader = mock(LineReader.class);
         System.setOut(printStream);
         accountManagement = new AccountManagement(printStream, reader);
+        genericAccount = new Account(0, "Bill", 1);
+    }
+
+    private void mockAccountCreation(){
+        when(reader.readLine()).thenReturn("Bill");
+        accountManagement.submit();
     }
 
     @Test
     public void testAccountIsCreatedWhenUserNameIsGiven() {
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         assertEquals("Bill", accountManagement.getName());
     }
 
@@ -39,8 +44,7 @@ public class AccountManagmentTests {
 
     @Test
     public void enteringAccountHolderNameReturnsAccount() {
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         Account account = accountManagement.getIndividualAccount(1);
         assertEquals("Bill", account.getName());
         assertEquals(0.00, account.getBalance());
@@ -67,18 +71,17 @@ public class AccountManagmentTests {
         accountManagement.menu();
         verify(printStream).println(contains("Sayonara"));
     }
-
 //    @Test
 //    public void menuOptionNumberFormatException(){
 //        when(reader.readInt()).thenReturn(10).thenReturn(0);
 //        accountManagement.menu();
 //        verify(printStream).println(contains("Create Account"));
+
 //    }
 
     @Test
     public void whenAccountIsCreatedAccountHasUniqueId() {
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         when(reader.readLine()).thenReturn("Paul");
         accountManagement.submit();
 
@@ -94,8 +97,7 @@ public class AccountManagmentTests {
 
     @Test
     public void menuOptionSelectDisplayAccountBalancePrintsAccountBalance(){
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         when(reader.readInt()).thenReturn(2).thenReturn(1).thenReturn(0);
         accountManagement.menu();
         verify(printStream, times(2)).println(contains("$0.00"));
@@ -103,18 +105,16 @@ public class AccountManagmentTests {
 
     @Test
     public void makingDepositIntoAnIndividualAccountUpdatesTheBalance(){
-        Account account = new Account(0, "Bill", 1);
-        assertEquals("Bill", account.getName());
-        assertEquals(0.00, account.getBalance());
-        assertEquals(1, account.getAccountNumber());
-        account.deposit(2.0);
-        assertEquals(2.0, account.getBalance());
+        assertEquals("Bill", genericAccount.getName());
+        assertEquals(0.00, genericAccount.getBalance());
+        assertEquals(1, genericAccount.getAccountNumber());
+        genericAccount.deposit(2.0);
+        assertEquals(2.0, genericAccount.getBalance());
     }
 
     @Test
     public void menuOptionSelectDepositAndDepositsMoney(){
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         when(reader.readInt()).thenReturn(3).thenReturn(1).thenReturn(2).thenReturn(1).thenReturn(0);
         when(reader.readDouble()).thenReturn(5.0);
         accountManagement.menu();
@@ -123,20 +123,15 @@ public class AccountManagmentTests {
 
     @Test
     public void makingWithdrawalDeductsFromBalanceOfAccount() {
-        Account account = new Account(0, "Bill", 1);
-        assertEquals("Bill", account.getName());
-        assertEquals(0.00, account.getBalance());
-        assertEquals(1, account.getAccountNumber());
-        account.deposit(10.0);
-        assertEquals(10.0, account.getBalance());
-        account.withdraw(8.0);
-        assertEquals(2.0, account.getBalance());
+        genericAccount.deposit(10.0);
+        assertEquals(10.0, genericAccount.getBalance());
+        genericAccount.withdraw(8.0);
+        assertEquals(2.0, genericAccount.getBalance());
     }
 
     @Test
     public void menuOptionSelectWithdrawAndWithdrawalsMoney(){
-        when(reader.readLine()).thenReturn("Bill");
-        accountManagement.submit();
+        mockAccountCreation();
         when(reader.readInt()).thenReturn(4).thenReturn(1).thenReturn(0);
         when(reader.readDouble()).thenReturn(5.0);
         accountManagement.menu();
