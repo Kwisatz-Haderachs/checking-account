@@ -15,6 +15,7 @@ public class AccountManagement {
                 1. Create Account
                 2. Account Balance
                 3. Deposit
+                4. Withdraw
                 0. Quit
 
                 Option: """);
@@ -55,9 +56,19 @@ public class AccountManagement {
         int number = reader.readInt();
         Account account = getIndividualAccount(number);
         printStream.println("Please enter amount: ");
-        int amount = reader.readInt();
+        double amount = reader.readDouble();
         account.deposit(amount);
         printStream.println("Deposit made");
+    }
+
+    public void makeWithdrawal(){
+        printStream.println("Please enter account number: ");
+        int number = reader.readInt();
+        Account account = getIndividualAccount(number);
+        printStream.println("Please enter amount: ");
+        double amount = reader.readDouble();
+        account.withdraw(amount);
+        printStream.println("Withdrawal made");
     }
 
     public void menu() {
@@ -67,6 +78,8 @@ public class AccountManagement {
             selection = reader.readInt();
             if (selection == 1) submit();
             if (selection == 2) displayAccountBalance();
+            if (selection == 3) makeDepoist();
+            if (selection == 4) makeWithdrawal();
             else if (selection == 0) printStream.println("Sayonara");
         }
     }

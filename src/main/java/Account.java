@@ -25,6 +25,10 @@ public class Account {
         this.balance += amount;
     }
 
+    public void withdraw(double amount) {
+        this.balance -= amount;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -35,7 +39,7 @@ public class Account {
 
     public String getAccountInfo() {
         String accountInfo = new StringBuilder()
-                .append(String.format("Account #%08d for %s", accountNumber, name))
+                .append(String.format("Account #%08d for %s %n", accountNumber, name))
                 .append(String.format("Current balance is $%.2f", balance)).toString();
         return accountInfo;
     }

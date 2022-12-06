@@ -20,4 +20,14 @@ public class LineReader {
             return 0;
         }
     }
+
+    public double readDouble() {
+        String input = scanner.nextLine();
+        try{
+            return Double.parseDouble(input);
+        } catch (NumberFormatException numberFormatException){
+            System.out.println(numberFormatException);
+            return 0;
+        }
+    }
 }

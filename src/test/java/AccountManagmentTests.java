@@ -110,5 +110,37 @@ public class AccountManagmentTests {
         account.deposit(2.0);
         assertEquals(2.0, account.getBalance());
     }
+
+    @Test
+    public void menuOptionSelectDepositAndDepositsMoney(){
+        when(reader.readLine()).thenReturn("Bill");
+        accountManagement.submit();
+        when(reader.readInt()).thenReturn(3).thenReturn(1).thenReturn(2).thenReturn(1).thenReturn(0);
+        when(reader.readDouble()).thenReturn(5.0);
+        accountManagement.menu();
+        verify(printStream).println(contains("$5.00"));
+    }
+
+    @Test
+    public void makingWithdrawalDeductsFromBalanceOfAccount() {
+        Account account = new Account(0, "Bill", 1);
+        assertEquals("Bill", account.getName());
+        assertEquals(0.00, account.getBalance());
+        assertEquals(1, account.getAccountNumber());
+        account.deposit(10.0);
+        assertEquals(10.0, account.getBalance());
+        account.withdraw(8.0);
+        assertEquals(2.0, account.getBalance());
+    }
+
+    @Test
+    public void menuOptionSelectWithdrawAndWithdrawalsMoney(){
+        when(reader.readLine()).thenReturn("Bill");
+        accountManagement.submit();
+        when(reader.readInt()).thenReturn(4).thenReturn(1).thenReturn(0);
+        when(reader.readDouble()).thenReturn(5.0);
+        accountManagement.menu();
+        verify(printStream).println(contains("Withdrawal made"));
+    }
 }
 
