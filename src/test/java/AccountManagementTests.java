@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
 
@@ -36,10 +37,10 @@ public class AccountManagementTests {
 
     @Test
     public void canCreateNewAccountWithBalanceAndName() {
-        Account account = new Account(0, "Bill", 1);
-        assertEquals("Bill", account.getName());
-        assertEquals(0.00, account.getBalance());
-        assertEquals(1, account.getAccountNumber());
+        Account account = new Account(0, "William", 2);
+        assertEquals("William", account.getName());
+        assertTrue(account.getBalance().contains("$0.00"));
+        assertTrue(account.getAccountNumber().contains("#00000002"));
     }
 
     @Test
@@ -47,7 +48,6 @@ public class AccountManagementTests {
         mockAccountCreation();
         Account account = accountManagement.getIndividualAccount(1);
         assertEquals("Bill", account.getName());
-        assertEquals(0.00, account.getBalance());
     }
 
     @Test
@@ -84,9 +84,9 @@ public class AccountManagementTests {
         mockAccountCreation();
         when(reader.readLine()).thenReturn("Paul");
         accountManagement.submit();
+        assertTrue(accountManagement.getIndividualAccount(1).getAccountNumber().contains("#00000001"));
+        assertTrue(accountManagement.getIndividualAccount(2).getAccountNumber().contains("#00000002"));
 
-        assertEquals(1, accountManagement.getIndividualAccount(1).getAccountNumber());
-        assertEquals(2, accountManagement.getIndividualAccount(2).getAccountNumber());
     }
 
     @Test
@@ -105,11 +105,8 @@ public class AccountManagementTests {
 
     @Test
     public void makingDepositIntoAnIndividualAccountUpdatesTheBalance(){
-        assertEquals("Bill", genericAccount.getName());
-        assertEquals(0.00, genericAccount.getBalance());
-        assertEquals(1, genericAccount.getAccountNumber());
         genericAccount.deposit(2.0);
-        assertEquals(2.0, genericAccount.getBalance());
+        assertTrue(genericAccount.getBalance().contains("$2.00"));
     }
 
     @Test
@@ -124,10 +121,9 @@ public class AccountManagementTests {
     @Test
     public void makingWithdrawalDeductsFromBalanceOfAccount() {
         genericAccount.deposit(10.0);
-        assertEquals(10.0, genericAccount.getBalance());
+        assertTrue(genericAccount.getBalance().contains("$10.00"));
         genericAccount.withdraw(8.0);
-        assertEquals(2.0, genericAccount.getBalance());
-    }
+        assertTrue(genericAccount.getBalance().contains("$2.00"));    }
 
     @Test
     public void menuOptionSelectWithdrawAndWithdrawalsMoney(){

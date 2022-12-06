@@ -16,8 +16,16 @@ public class Account {
         return this.name;
     }
 
-    public double getBalance() {
-        return this.balance;
+    public String getBalance() {
+        return String.format("Current balance is $%.2f", balance);
+    }
+
+    public String getAccountNumber() {
+        return String.format("Account #%08d", accountNumber);
+    }
+
+    public String getAccountInfo() {
+        return getAccountNumber() + "%n" + getBalance();
     }
 
     public void deposit(double amount) {
@@ -27,20 +35,5 @@ public class Account {
 
     public void withdraw(double amount) {
         this.balance -= amount;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    public String getAccountInfo() {
-        String accountInfo = new StringBuilder()
-                .append(String.format("Account #%08d for %s %n", accountNumber, name))
-                .append(String.format("Current balance is $%.2f", balance)).toString();
-        return accountInfo;
     }
 }
