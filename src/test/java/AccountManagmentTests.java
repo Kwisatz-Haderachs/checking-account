@@ -1,9 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -89,4 +86,29 @@ public class AccountManagmentTests {
         assertEquals(2, accountManagement.getIndividualAccount(2).getAccountNumber());
     }
 
+    @Test
+    public void menuOptionHasDisplayAccountBalance(){
+        accountManagement.menu();
+        verify(printStream).println(contains("Balance"));
+    }
+
+    @Test
+    public void menuOptionSelectDisplayAccountBalancePrintsAccountBalance(){
+        when(reader.readLine()).thenReturn("Bill");
+        accountManagement.submit();
+        when(reader.readInt()).thenReturn(2).thenReturn(1).thenReturn(0);
+        accountManagement.menu();
+        verify(printStream, times(2)).println(contains("$0.00"));
+    }
+
+    @Test
+    public void makingDepositIntoAnIndividualAccountUpdatesTheBalance(){
+        Account account = new Account(0, "Bill", 1);
+        assertEquals("Bill", account.getName());
+        assertEquals(0.00, account.getBalance());
+        assertEquals(1, account.getAccountNumber());
+        account.deposit(2.0);
+        assertEquals(2.0, account.getBalance());
+    }
 }
+

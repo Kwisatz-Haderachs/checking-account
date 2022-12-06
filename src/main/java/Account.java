@@ -20,8 +20,9 @@ public class Account {
         return this.balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void deposit(double amount) {
+        // exception handling not yet implemented
+        this.balance += amount;
     }
 
     public void setName(String name) {
@@ -32,13 +33,9 @@ public class Account {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     public String getAccountInfo() {
         String accountInfo = new StringBuilder()
-                .append(String.format("Account #%08d for %s has been created.%n", accountNumber, name))
+                .append(String.format("Account #%08d for %s", accountNumber, name))
                 .append(String.format("Current balance is $%.2f", balance)).toString();
         return accountInfo;
     }
