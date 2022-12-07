@@ -1,3 +1,5 @@
+package AcctMgmt;
+
 import java.io.PrintStream;
 import java.util.HashMap;
 
@@ -5,20 +7,9 @@ public class AccountManagement {
 
     private String name;
 
-    private HashMap<Integer, Account> accounts;
+    private HashMap<String, Account> accounts;
     private PrintStream printStream;
     private LineReader reader;
-
-
-    private String displayMenu = ("""
-
-                1. Create Account
-                2. Account Balance
-                3. Deposit
-                4. Withdraw
-                0. Quit
-
-                Option: """);
 
     public AccountManagement(PrintStream printStream, LineReader reader) {
         this.printStream = printStream;
@@ -26,13 +17,14 @@ public class AccountManagement {
         this.accounts = new HashMap<>();
     }
 
-    public void submit() {
+    public void createAccount() {
+        printStream.println("Create account ...");
         printStream.println("Please enter account holder name: ");
         name = reader.readLine();
         int accountNumber = accounts.size() + 1;
         Account account = new Account(0.0, name, accountNumber);
-        accounts.put(accountNumber, account);
-        printStream.println("Account created...");
+        accounts.put(account.getAccountNumber(), account);
+        printStream.println("Account created for " + name);
         printStream.println(account.getAccountInfo());
     }
 
@@ -40,21 +32,21 @@ public class AccountManagement {
         return this.name;
     }
 
-    public Account getIndividualAccount(int accountNumber) {
+    public Account getIndividualAccount(String accountNumber) {
         return accounts.get(accountNumber);
     }
 
     public void displayAccountBalance(){
         printStream.println("Please enter account number: ");
         int number = reader.readInt();
-        Account account = getIndividualAccount(number);
+        Account account = getIndividualAccount(convertIntegerToAccountNumber(number));
         printStream.println(account.getAccountInfo());
     }
 
     public void makeDepoist(){
         printStream.println("Please enter account number: ");
         int number = reader.readInt();
-        Account account = getIndividualAccount(number);
+        Account account = getIndividualAccount(convertIntegerToAccountNumber(number));
         printStream.println("Please enter amount: ");
         double amount = reader.readDouble();
         account.deposit(amount);
@@ -64,24 +56,16 @@ public class AccountManagement {
     public void makeWithdrawal(){
         printStream.println("Please enter account number: ");
         int number = reader.readInt();
-        Account account = getIndividualAccount(number);
+        Account account = getIndividualAccount(convertIntegerToAccountNumber(number));
         printStream.println("Please enter amount: ");
         double amount = reader.readDouble();
-        account.withdraw(amount);
-        printStream.println("Withdrawal made");
+        String result = account.withdraw(amount);
+        printStream.println(result);
     }
 
-    public void menu() {
-        int selection = 10;
-        while (selection != 0) {
-            printStream.println(displayMenu);
-            selection = reader.readInt();
-            if (selection == 1) submit();
-            if (selection == 2) displayAccountBalance();
-            if (selection == 3) makeDepoist();
-            if (selection == 4) makeWithdrawal();
-            else if (selection == 0) printStream.println("Sayonara");
-        }
+
+    public String convertIntegerToAccountNumber(int num){
+        return String.format("#%08d", num);
     }
 
 }
