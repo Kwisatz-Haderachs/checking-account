@@ -63,7 +63,7 @@ public class AccountManagementTests {
 
 
     @Test
-    public void whenmakingWithdrawalReturnsErrorMessageWhenItExceedsBalance() {
+    public void whenMakingWithdrawalShouldReturnsErrorMessageWhenItExceedsBalance() {
         when(reader.readInt()).thenReturn(1);
         when(reader.readDouble()).thenReturn(2.00);
         accountManagement.makeWithdrawal();
