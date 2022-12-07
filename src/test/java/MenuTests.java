@@ -1,4 +1,3 @@
-import AcctMgmt.Account;
 import AcctMgmt.AccountManagement;
 import AcctMgmt.LineReader;
 import AcctMgmt.Menu;
@@ -53,7 +52,7 @@ public class MenuTests {
     public void whenOption3DepositIsSelectedShouldEnterAccountManagementDeposit(){
         when(reader.readInt()).thenReturn(3).thenReturn(0);
         menu.handleSelection();
-        verify(accountManagement, times(1)).makeDepoist();
+        verify(accountManagement, times(1)).makeDeposit();
     }
 
     @Test

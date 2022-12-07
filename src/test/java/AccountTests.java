@@ -11,16 +11,10 @@ import static org.mockito.Mockito.*;
 
 public class AccountTests {
 
-    private PrintStream printStream;
-    private LineReader reader;
     private Account testAccount;
-
 
     @BeforeEach
     void setUp() {
-        printStream = mock(PrintStream.class);
-        reader = mock(LineReader.class);
-        System.setOut(printStream);
         testAccount = new Account(0, "Kaoshi", 1);
     }
 

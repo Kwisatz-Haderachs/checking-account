@@ -26,13 +26,13 @@ public class AccountManagementTests {
         accountManagement = new AccountManagement(printStream, reader);
         when(reader.readLine()).thenReturn("Bill");
         accountManagement.createAccount();
-        genericAccount = accountManagement.getIndividualAccount(accountManagement.convertIntegerToAccountNumber(1));
+        genericAccount = accountManagement.getIndividualAccount(1);
 
     }
 
     @Test
     public void whenEnteringAccountHolderNumberReturnsAccount() {
-        Account account = accountManagement.getIndividualAccount(accountManagement.convertIntegerToAccountNumber(1));
+        Account account = accountManagement.getIndividualAccount(1);
         assertEquals("Bill", account.getName());
     }
 
@@ -40,7 +40,7 @@ public class AccountManagementTests {
     public void whenAccountIsCreatedAccountShouldHaveUniqueIdBasedOnSize() {
         when(reader.readLine()).thenReturn("Paul");
         accountManagement.createAccount();
-        assertEquals("Paul", accountManagement.getIndividualAccount("#00000002").getName());
+        assertEquals("Paul", accountManagement.getIndividualAccount(2).getName());
     }
 
 
@@ -48,7 +48,7 @@ public class AccountManagementTests {
     public void whenMakingDepositShouldTriggerRequestForIndividualAccountAndUpdateTheBalance(){
         when(reader.readInt()).thenReturn(1);
         when(reader.readDouble()).thenReturn(2.00);
-        accountManagement.makeDepoist();
+        accountManagement.makeDeposit();
         assertTrue(genericAccount.getBalance().contains("$2.00"));
     }
 

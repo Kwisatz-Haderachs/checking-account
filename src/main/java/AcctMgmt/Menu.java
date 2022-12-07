@@ -7,7 +7,7 @@ public class Menu {
     PrintStream printStream;
     LineReader reader;
 
-    private String displayMenu = ("""
+    private final String displayMenu = ("""
 
                 1. Create Account
                 2. Account Balance
@@ -30,9 +30,10 @@ public class Menu {
             selection = reader.readInt();
             if (selection == 1) accountManagement.createAccount();
             if (selection == 2) accountManagement.displayAccountBalance();
-            if (selection == 3) accountManagement.makeDepoist();
+            if (selection == 3) accountManagement.makeDeposit();
             if (selection == 4) accountManagement.makeWithdrawal();
             else if (selection == 0) printStream.println("Sayonara");
         }
     }
+
 }

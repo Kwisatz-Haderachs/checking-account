@@ -25,12 +25,8 @@ public class Account {
         return String.format("#%08d", accountNumber);
     }
 
-//    public String formatAccountNumber(int num){
-//        return String.format("#%08d", num);
-//    }
-//
     public String getAccountInfo() {
-        return "AcctMgmt.Account: " + getAccountNumber() + "\n" + "Current balance is: " + getBalance();
+        return "Account: " + getAccountNumber() + "\n" + "Current balance is: " + getBalance();
     }
 
     public void deposit(double amount) {
