@@ -10,10 +10,10 @@ public class AccountManagement {
     private PrintStream printStream;
     private LineReader reader;
 
-    public AccountManagement(PrintStream printStream, LineReader reader) {
+    public AccountManagement(PrintStream printStream, LineReader reader, HashMap<String, Account> accounts) {
         this.printStream = printStream;
         this.reader = reader;
-        this.accounts = new HashMap<>();
+        this.accounts = accounts;
     }
 
     public void createAccount() {

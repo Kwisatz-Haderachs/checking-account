@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 import AcctMgmt.Account;
 import AcctMgmt.AccountManagement;
@@ -23,7 +24,8 @@ public class AccountManagementTests {
         printStream = mock(PrintStream.class);
         reader = mock(LineReader.class);
         System.setOut(printStream);
-        accountManagement = new AccountManagement(printStream, reader);
+        HashMap<String, Account> accounts = new HashMap<>();
+        accountManagement = new AccountManagement(printStream, reader, accounts);
         when(reader.readLine()).thenReturn("Bill");
         accountManagement.createAccount();
         genericAccount = accountManagement.getIndividualAccount(1);
