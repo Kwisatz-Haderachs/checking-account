@@ -1,10 +1,12 @@
 import AcctMgmt.AccountManagement;
 import AcctMgmt.LineReader;
 import AcctMgmt.Menu;
+import Cmds.Cmd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
@@ -22,7 +24,7 @@ public class MenuTests {
         reader = mock(LineReader.class);
         System.setOut(printStream);
         accountManagement = mock(AccountManagement.class);
-        menu = new Menu(accountManagement, printStream, reader);
+        menu = new Menu(accountManagement, printStream, reader, new HashMap<>());
     }
 
     @Test

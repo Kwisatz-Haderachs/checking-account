@@ -14,22 +14,10 @@ public class LineReader {
     }
 
     public int readInt() {
-        String input = scanner.nextLine();
-        try{
-            return Integer.parseInt(input);
-        } catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException);
-            return 0;
-        }
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public double readDouble() {
-        String input = scanner.nextLine();
-        try{
-            return Double.parseDouble(input);
-        } catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException);
-            return 0;
-        }
+        return Double.parseDouble(scanner.nextLine());
     }
 }

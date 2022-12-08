@@ -1,11 +1,16 @@
 package AcctMgmt;
 
+import Cmds.*;
+
 import java.io.PrintStream;
+import java.util.HashMap;
 
 public class Menu {
     AccountManagement accountManagement;
     PrintStream printStream;
     LineReader reader;
+    HashMap<Integer, Cmd> cmdHashMap;
+
 
     private final String displayMenu = ("""
 
@@ -17,22 +22,27 @@ public class Menu {
 
                 Option: """);
 
-    public Menu(AccountManagement accountManagement, PrintStream printStream, LineReader reader){
+    public Menu(AccountManagement accountManagement, PrintStream printStream, LineReader reader, HashMap<Integer,Cmd> hashMap){
         this.accountManagement = accountManagement;
         this.printStream = printStream;
         this.reader = reader;
+        this.cmdHashMap = hashMap;
     }
 
     public void handleSelection() {
+        cmdHashMap.put(1, new CreateAccountCmd(accountManagement));
+        cmdHashMap.put(2,  new ViewBalanceCmd(accountManagement));
+        cmdHashMap.put(3, new DepositCmd(accountManagement));
+        cmdHashMap.put(4, new WithdrawalCmd(accountManagement));
+
         int selection = 10;
         while (selection != 0) {
             printStream.println(displayMenu);
             selection = reader.readInt();
-            if (selection == 1) accountManagement.createAccount();
-            if (selection == 2) accountManagement.displayAccountBalance();
-            if (selection == 3) accountManagement.makeDeposit();
-            if (selection == 4) accountManagement.makeWithdrawal();
-            else if (selection == 0) printStream.println("Sayonara");
+            if(cmdHashMap.containsKey(selection)){
+                cmdHashMap.get(selection).execute();
+            }
+            if (selection == 0) printStream.println("Sayonara");
         }
     }
 

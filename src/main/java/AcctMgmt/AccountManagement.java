@@ -42,15 +42,20 @@ public class AccountManagement {
     }
 
     public void makeDeposit(){
-        getIndividualAccount(returnAccountNum()).deposit(returnAmount());
+        int accountNum = (returnAccountNum());
+        Account account = getIndividualAccount(accountNum);
+        account.deposit(returnTransactionAmount());
         printStream.println("Deposit made");
     }
 
     public void makeWithdrawal(){
-        printStream.println(getIndividualAccount(returnAccountNum()).withdraw(returnAmount()));
+        int accountNum = (returnAccountNum());
+        Account account = getIndividualAccount(accountNum);
+        String msg = account.withdraw(returnTransactionAmount());
+        printStream.println(msg);
     }
 
-    private double returnAmount(){
+    private double returnTransactionAmount(){
         printStream.println("Please enter amount: ");
         return reader.readDouble();
     }
