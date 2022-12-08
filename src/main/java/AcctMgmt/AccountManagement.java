@@ -1,5 +1,7 @@
 package AcctMgmt;
 
+import Account.Account;
+import Account.AccountFactory;
 import java.io.PrintStream;
 import java.util.HashMap;
 
@@ -9,16 +11,18 @@ public class AccountManagement {
     private HashMap<String, Account> accounts;
     private PrintStream printStream;
     private LineReader reader;
+    private AccountFactory accountFactory;
 
     public AccountManagement(PrintStream printStream, LineReader reader, HashMap<String, Account> accounts) {
         this.printStream = printStream;
         this.reader = reader;
         this.accounts = accounts;
+        accountFactory = new AccountFactory();
     }
 
     public void createAccount() {
         String name = accountHolderName();
-        Account account = new Account(0.0, name, accounts.size() + 1);
+        Account account = accountFactory.createAccount( name, 0.0, accounts.size() + 1);
         accounts.put(account.getAccountNumber(), account);
         printCreateAccountDetails(account);
     }

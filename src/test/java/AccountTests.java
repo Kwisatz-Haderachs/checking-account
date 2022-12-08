@@ -1,4 +1,4 @@
-import AcctMgmt.Account;
+import Account.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

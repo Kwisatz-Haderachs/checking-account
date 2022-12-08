@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import AcctMgmt.Account;
+import Account.Account;
 import AcctMgmt.AccountManagement;
 import AcctMgmt.LineReader;
 import org.junit.jupiter.api.BeforeEach;

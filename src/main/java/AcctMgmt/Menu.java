@@ -30,11 +30,6 @@ public class Menu {
     }
 
     public void handleSelection() {
-        cmdHashMap.put(1, new CreateAccountCmd(accountManagement));
-        cmdHashMap.put(2,  new ViewBalanceCmd(accountManagement));
-        cmdHashMap.put(3, new DepositCmd(accountManagement));
-        cmdHashMap.put(4, new WithdrawalCmd(accountManagement));
-
         int selection = 10;
         while (selection != 0) {
             printStream.println(displayMenu);

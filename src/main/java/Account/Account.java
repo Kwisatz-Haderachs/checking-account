@@ -1,4 +1,4 @@
-package AcctMgmt;
+package Account;
 
 public class Account {
 

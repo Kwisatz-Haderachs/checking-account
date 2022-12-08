@@ -1,7 +1,7 @@
 import AcctMgmt.AccountManagement;
 import AcctMgmt.LineReader;
 import AcctMgmt.Menu;
-import Cmds.Cmd;
+import Cmds.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +24,17 @@ public class MenuTests {
         reader = mock(LineReader.class);
         System.setOut(printStream);
         accountManagement = mock(AccountManagement.class);
-        menu = new Menu(accountManagement, printStream, reader, new HashMap<>());
+        HashMap<Integer, Cmd> cmdHashMap = new HashMap<>();
+        cmdHashMap.put(1, new CreateAccountCmd(accountManagement));
+        cmdHashMap.put(2,  new ViewBalanceCmd(accountManagement));
+        cmdHashMap.put(3, new DepositCmd(accountManagement));
+        cmdHashMap.put(4, new WithdrawalCmd(accountManagement));
+        menu = new Menu(accountManagement, printStream, reader, cmdHashMap);
     }
 
     @Test
     public void whenOption1CreateAccountIsSelectedShouldEnterAccountManagementCreateAccount(){
-        when(reader.readInt()).thenReturn(1).thenReturn(0);
+        when(reader.readInt()).thenReturn(1, 0);
         menu.handleSelection();
         verify(accountManagement, times(1)).createAccount();
     }
@@ -37,7 +42,7 @@ public class MenuTests {
 
     @Test
     public void whenOption2AccountBalanceIsSelectedShouldEnterAccountManagementBalance(){
-        when(reader.readInt()).thenReturn(2).thenReturn(0);
+        when(reader.readInt()).thenReturn(2,0);
         menu.handleSelection();
         verify(accountManagement, times(1)).displayAccountBalance();
     }
@@ -52,14 +57,14 @@ public class MenuTests {
 
     @Test
     public void whenOption3DepositIsSelectedShouldEnterAccountManagementDeposit(){
-        when(reader.readInt()).thenReturn(3).thenReturn(0);
+        when(reader.readInt()).thenReturn(3,0);
         menu.handleSelection();
         verify(accountManagement, times(1)).makeDeposit();
     }
 
     @Test
     public void whenOption4WithdrawalIsSelectedShouldEnterAccountManagementWithdrawal() {
-        when(reader.readInt()).thenReturn(4).thenReturn(0);
+        when(reader.readInt()).thenReturn(4,0);
         menu.handleSelection();
         verify(accountManagement, times(1)).makeWithdrawal();
     }
