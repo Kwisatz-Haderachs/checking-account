@@ -13,23 +13,4 @@ public class LineReader {
         return scanner.nextLine();
     }
 
-    public int readInt() {
-        String input = scanner.nextLine();
-        try{
-            return Integer.parseInt(input);
-        } catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException);
-            return 0;
-        }
-    }
-
-    public double readDouble() {
-        String input = scanner.nextLine();
-        try{
-            return Double.parseDouble(input);
-        } catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException);
-            return 0;
-        }
-    }
 }

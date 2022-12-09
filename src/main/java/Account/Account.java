@@ -1,4 +1,4 @@
-package AcctMgmt;
+package Account;
 
 public class Account {
 
@@ -7,7 +7,7 @@ public class Account {
 
     private int accountNumber;
     
-    public Account(double balance, String name, int accountNumber) {
+    public Account(String name, double balance, int accountNumber) {
         this.balance = balance;
         this.name = name;
         this.accountNumber = accountNumber;
