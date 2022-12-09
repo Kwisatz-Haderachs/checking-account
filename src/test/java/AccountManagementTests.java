@@ -48,8 +48,7 @@ public class AccountManagementTests {
 
     @Test
     public void whenMakingDepositShouldTriggerRequestForIndividualAccountAndUpdateTheBalance(){
-        when(reader.readInt()).thenReturn(1);
-        when(reader.readDouble()).thenReturn(2.00);
+        when(reader.readLine()).thenReturn("1", "2.00");
         accountManagement.makeDeposit();
         assertTrue(genericAccount.getBalance().contains("$2.00"));
     }
@@ -57,8 +56,7 @@ public class AccountManagementTests {
     @Test
     public void whenMakingWithdrawalShouldDeductsFromBalanceAndPrint() {
         genericAccount.deposit(10.0);
-        when(reader.readInt()).thenReturn(1);
-        when(reader.readDouble()).thenReturn(2.00);
+        when(reader.readLine()).thenReturn("1", "2.00");
         accountManagement.makeWithdrawal();
         verify(printStream).println(contains("withdrawal of $2.00"));
     }
@@ -66,11 +64,17 @@ public class AccountManagementTests {
 
     @Test
     public void whenMakingWithdrawalShouldReturnsErrorMessageWhenItExceedsBalance() {
-        when(reader.readInt()).thenReturn(1);
-        when(reader.readDouble()).thenReturn(2.00);
+        when(reader.readLine()).thenReturn("1", "2.00");
         accountManagement.makeWithdrawal();
         verify(printStream).println(contains("Invalid transaction"));
         assertTrue(genericAccount.getBalance().contains("$0.00"));
+    }
+
+    @Test
+    public void whenEnteringAccountNumberShouldCheckAccountNumberIsValid(){
+        when(reader.readLine()).thenReturn("Ok", "1", "1.00");
+        accountManagement.makeWithdrawal();
+        verify(printStream).println(contains("Invalid account number"));
     }
 }
 

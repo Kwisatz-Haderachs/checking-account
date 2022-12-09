@@ -34,7 +34,7 @@ public class MenuTests {
 
     @Test
     public void whenOption1CreateAccountIsSelectedShouldEnterAccountManagementCreateAccount(){
-        when(reader.readInt()).thenReturn(1, 0);
+        when(reader.readLine()).thenReturn("1", "0");
         menu.handleSelection();
         verify(accountManagement, times(1)).createAccount();
     }
@@ -42,14 +42,14 @@ public class MenuTests {
 
     @Test
     public void whenOption2AccountBalanceIsSelectedShouldEnterAccountManagementBalance(){
-        when(reader.readInt()).thenReturn(2,0);
+        when(reader.readLine()).thenReturn("2","0");
         menu.handleSelection();
         verify(accountManagement, times(1)).displayAccountBalance();
     }
 
     @Test
     public void whenOption0IsSelectedShouldQuitTriggersExitNotification() {
-        when(reader.readInt()).thenReturn(0);
+        when(reader.readLine()).thenReturn("0");
         menu.handleSelection();
         verify(printStream).println(contains("Sayonara"));
     }
@@ -57,14 +57,14 @@ public class MenuTests {
 
     @Test
     public void whenOption3DepositIsSelectedShouldEnterAccountManagementDeposit(){
-        when(reader.readInt()).thenReturn(3,0);
+        when(reader.readLine()).thenReturn("3","0");
         menu.handleSelection();
         verify(accountManagement, times(1)).makeDeposit();
     }
 
     @Test
     public void whenOption4WithdrawalIsSelectedShouldEnterAccountManagementWithdrawal() {
-        when(reader.readInt()).thenReturn(4,0);
+        when(reader.readLine()).thenReturn("4","0");
         menu.handleSelection();
         verify(accountManagement, times(1)).makeWithdrawal();
     }

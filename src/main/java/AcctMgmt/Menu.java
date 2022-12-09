@@ -33,7 +33,14 @@ public class Menu {
         int selection = 10;
         while (selection != 0) {
             printStream.println(displayMenu);
-            selection = reader.readInt();
+            try {
+                String input = reader.readLine();
+                selection = Integer.parseInt(input);
+            } catch (NumberFormatException ex) {
+                printStream.println("Invalid selection");
+                selection = 0;
+            }
+
             if(cmdHashMap.containsKey(selection)){
                 cmdHashMap.get(selection).execute();
             }

@@ -11,12 +11,12 @@ public class AccountTests {
 
     @BeforeEach
     void setUp() {
-        testAccount = new Account(0, "Kaoshi", 1);
+        testAccount = new Account("Kaoshi", 0.0,1);
     }
 
     @Test
     public void whenCreateNewAccountShouldCreateWith0BalanceAndName() {
-        Account account = new Account(0, "William", 2);
+        Account account = new Account("William", 0.0, 2);
         assertEquals("William", account.getName());
         assertTrue(account.getBalance().contains("$0.00"));
         assertTrue(account.getAccountNumber().contains("#00000002"));

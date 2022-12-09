@@ -22,7 +22,8 @@ public class AccountManagement {
 
     public void createAccount() {
         String name = accountHolderName();
-        Account account = accountFactory.createAccount( name, 0.0, accounts.size() + 1);
+        int count = accounts.size()+1;
+        Account account = accountFactory.createAccount( name, 0.0, count);
         accounts.put(account.getAccountNumber(), account);
         printCreateAccountDetails(account);
     }
@@ -37,40 +38,74 @@ public class AccountManagement {
         printStream.println(account.getAccountInfo());
     }
 
-    public Account getIndividualAccount(int accountNumber) {
-        return accounts.get(convertIntegerToAccountNumber(accountNumber));
-    }
-
     public void displayAccountBalance(){
-        printStream.println(getIndividualAccount(returnAccountNum()).getAccountInfo());
+        int accountNum = readInAccountNum();
+        Account account = getIndividualAccount(accountNum);
+        printStream.println(account.getAccountInfo());
     }
 
-    public void makeDeposit(){
-        int accountNum = (returnAccountNum());
-        Account account = getIndividualAccount(accountNum);
-        account.deposit(returnTransactionAmount());
+    public Account getIndividualAccount(int accountNum) {
+        return accounts.get(convertAccountNumber(accountNum));
+    }
+
+    private String convertAccountNumber(int accountNum) {
+        return String.format("#%08d", accountNum);
+    }
+
+    private Account validateAccount() {
+        int accountNum = readInAccountNum();
+        String accountNumKey = convertAccountNumber(accountNum);
+        if(!accounts.containsKey(accountNumKey)) {
+            printStream.println("Account doesn't exist");
+            readInAccountNum();
+        }
+        return getIndividualAccount(accountNum);
+    }
+
+    public void makeDeposit() {
+        Account account = validateAccount();
+        double transactionAmount = returnTransactionAmount();
+        account.deposit(transactionAmount);
         printStream.println("Deposit made");
     }
 
-    public void makeWithdrawal(){
-        int accountNum = (returnAccountNum());
-        Account account = getIndividualAccount(accountNum);
-        String msg = account.withdraw(returnTransactionAmount());
+    public void makeWithdrawal() {
+        Account account = validateAccount();
+        double transactionAmount = returnTransactionAmount();
+        String msg = account.withdraw(transactionAmount);
         printStream.println(msg);
     }
 
-    private double returnTransactionAmount(){
-        printStream.println("Please enter amount: ");
-        return reader.readDouble();
-    }
-
-    private int returnAccountNum(){
+    private int readInAccountNum(){
         printStream.println("Please enter account number: ");
-        return reader.readInt();
+        boolean validInput = false;
+        int acctNum = 0;
+        while (!validInput) {
+            String input = reader.readLine();
+            try {
+                acctNum = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid account number format");
+            }
+        }
+        return acctNum;
     }
 
-    private String convertIntegerToAccountNumber(int num){
-        return String.format("#%08d", num);
-    }
 
+    private double returnTransactionAmount() {
+        printStream.println("Please enter amount: ");
+        boolean validFormat = false;
+        double transactionAmount = 0.0;
+        while (!validFormat) {
+            String input = reader.readLine();
+            try{
+                transactionAmount = Double.parseDouble(input);
+                validFormat = true;
+            } catch (NumberFormatException ex){
+                System.out.println("Invalid number format");
+            }
+        }
+        return transactionAmount;
+    }
 }
