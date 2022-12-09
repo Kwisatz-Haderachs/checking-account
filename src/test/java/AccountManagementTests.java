@@ -29,7 +29,6 @@ public class AccountManagementTests {
         when(reader.readLine()).thenReturn("Bill");
         accountManagement.createAccount();
         genericAccount = accountManagement.getIndividualAccount(1);
-
     }
 
     @Test
@@ -50,10 +49,11 @@ public class AccountManagementTests {
     public void whenMakingDepositShouldTriggerRequestForIndividualAccountAndUpdateTheBalance(){
         when(reader.readLine()).thenReturn("1", "2.00");
         accountManagement.makeDeposit();
-        assertTrue(genericAccount.getBalance().contains("$2.00"));
+        verify(printStream).println(contains("Deposit made"));
     }
 
     @Test
+
     public void whenMakingWithdrawalShouldDeductsFromBalanceAndPrint() {
         genericAccount.deposit(10.0);
         when(reader.readLine()).thenReturn("1", "2.00");
